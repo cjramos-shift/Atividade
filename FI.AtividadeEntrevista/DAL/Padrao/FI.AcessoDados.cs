@@ -35,6 +35,7 @@ namespace FI.AtividadeEntrevista.DAL
             {
                 comando.ExecuteNonQuery();
             }
+            catch(Exception ex) { }
             finally
             {
                 conexao.Close();

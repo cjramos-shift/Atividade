@@ -73,6 +73,7 @@ namespace WebAtividadeEntrevista.Models
         /// <summary>
         /// Telefone
         /// </summary>
+        [MaxLength(15)]
         public string Telefone { get; set; }
 
     }    

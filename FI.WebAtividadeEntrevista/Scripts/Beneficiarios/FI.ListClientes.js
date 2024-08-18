@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(function () {
-    //$('#formCadastro #CPF').mask('999.999.999-99');
+    //$('#formCadastro #CPF').mask('000.000.000-00');
 
     if (document.getElementById("gridClientes"))
         $('#gridClientes').jtable({
