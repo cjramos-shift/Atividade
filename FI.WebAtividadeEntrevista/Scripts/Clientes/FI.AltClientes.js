@@ -4,6 +4,7 @@ $(document).ready(function () {
         $('#formCadastro #Nome').val(obj.Nome);
         $('#formCadastro #CEP').val(obj.CEP).mask('99999-999');
         $('#formCadastro #Email').val(obj.Email);
+        
         $('#formCadastro #Sobrenome').val(obj.Sobrenome);
         $('#formCadastro #CPF').val(obj.CPF).mask('999.999.999-99');
         $('#formCadastro #Nacionalidade').val(obj.Nacionalidade);
@@ -11,6 +12,10 @@ $(document).ready(function () {
         $('#formCadastro #Cidade').val(obj.Cidade);
         $('#formCadastro #Logradouro').val(obj.Logradouro);
         $('#formCadastro #Telefone').val(obj.Telefone).mask('(99) 9999-9999');
+
+        $('#formCadastro #btnModalBenef').on('click', function () {
+            showModal(obj.Id);
+        });
     }
 
     $('#formCadastro').submit(function (e) {
@@ -107,4 +112,37 @@ function validarCPF(cpf) {
     if (resto !== parseInt(cpf.charAt(10))) return false;
 
     return true;
+}
+
+function showModal(id) {
+    $.ajax({
+        url: urlModal,
+        type: 'GET',
+        data: { id: id },
+        success: function (result) {
+            var modalId = 'modal-' + Math.random().toString().replace('.', '');
+            var modalHtml = `
+                        <div id="${modalId}" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title">Beneficiários</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        ${result}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+            $('body').append(modalHtml);
+            $('#' + modalId).modal('show');
+            $('#' + modalId + ' #hdIDCLIENTE').val(id);
+        },
+        error: function () {
+            alert('Erro ao carregar o modal.');
+        }
+    });
 }

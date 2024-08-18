@@ -10,10 +10,23 @@ namespace FI.WebAtividadeEntrevista
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-{version}.js",
-                "~/Scripts/jquery.maskedinput.min.js")); 
+                "~/Scripts/jquery-{version}.min.js",
+                "~/Scripts/jquery.maskedinput.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/modalBenef").Include(
+                "~/Scripts/Beneficiarios/FI.ModalBeneficiarios.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
             //            "~/Scripts/jquery-{version}.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/altBeneficiarios").Include(
+                "~/Scripts/Beneficiarios/FI.AltBeneficiario.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/beneficiarios").Include(
+                "~/Scripts/Beneficiarios/FI.Beneficiarios.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/listBeneficiarios").Include(
+                "~/Scripts/Beneficiarios/FI.ListBeneficiarios.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));

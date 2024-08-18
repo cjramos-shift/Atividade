@@ -77,22 +77,27 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                bo.Alterar(new Cliente()
+                if (!bo.VerificarExistencia(model.CPF))
                 {
-                    Id = model.Id,
-                    CEP = model.CEP,
-                    Cidade = model.Cidade,
-                    Email = model.Email,
-                    Estado = model.Estado,
-                    Logradouro = model.Logradouro,
-                    Nacionalidade = model.Nacionalidade,
-                    Nome = model.Nome,
-                    Sobrenome = model.Sobrenome,
-                    CPF = model.CPF,
-                    Telefone = model.Telefone
-                });
+                    bo.Alterar(new Cliente()
+                    {
+                        Id = model.Id,
+                        CEP = model.CEP,
+                        Cidade = model.Cidade,
+                        Email = model.Email,
+                        Estado = model.Estado,
+                        Logradouro = model.Logradouro,
+                        Nacionalidade = model.Nacionalidade,
+                        Nome = model.Nome,
+                        Sobrenome = model.Sobrenome,
+                        CPF = model.CPF,
+                        Telefone = model.Telefone
+                    });
 
-                return Json("Cadastro alterado com sucesso");
+                    return Json("Cadastro alterado com sucesso");
+                }
+                else
+                    return Json("CPF já utilizado");
             }
         }
 

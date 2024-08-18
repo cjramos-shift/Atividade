@@ -1,0 +1,22 @@
+﻿<form id="formCadastroBenef" method="post">
+    <input type="hidden" id="hdIDCLIENTE" />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="CPF">CPF:</label>
+                <input required="required" type="text" class="form-control" id="CPF" name="CPF" placeholder="Ex.: 010.011.111-00" maxlength="14" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Nome">Nome:</label>
+                <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group pt-3">
+                <button id="bntIncluir" type="button" class="btn btn-sm btn-success" onclick="insereBeneficiario()">Incluir</button>
+            </div>
+        </div>
+    </div>
+</form>

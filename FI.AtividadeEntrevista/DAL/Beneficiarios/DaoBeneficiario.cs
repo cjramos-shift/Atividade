@@ -53,6 +53,7 @@ namespace FI.AtividadeEntrevista.DAL.Beneficiarios
             List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
 
             parametros.Add(new System.Data.SqlClient.SqlParameter("CPF", CPF));
+            //parametros.Add(new System.Data.SqlClient.SqlParameter("IDCLIENTE", idCliente));
 
             DataSet ds = base.Consultar("FI_SP_VerificaBenef", parametros);
 
