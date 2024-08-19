@@ -1,20 +1,26 @@
 ﻿
 $(document).ready(function () {
-    if (obj) {
-        //$('#formCadastroBenef #Nome').val(obj.Nome);
-        //$('#formCadastroBenef #CPF').val(obj.CPF);
-        //$('#formCadastroBenef #hdIDCLIENTE').val(obj.IDCLIENTE);
-    }
+    $('#formCadastroBenef #CPF').mask('999.999.999-99');
 })
 
 function insereBeneficiario() {
+
+    var cpf = $('#formCadastroBenef #CPF').val();
+
+    if (!validarCPF(cpf)) {
+        ModalDialog("Ocorreu um erro", "O CPF Informado é inválido.");
+        return;
+    }
+
+    cpf = cpf.replace(/[^\d]+/g, '');
+
     $.ajax({
-        url: urlPost,
+        url: "/Beneficiario/Incluir/" + $('#formCadastroBenef #hdIDCLIENTE').val(),
         method: "POST",
         data: {
-            "NOME": $(this).find("#Nome").val(),
-            "CPF": $(this).find("#CPF").val(),
-            "IDCLIENTE": $(this).find("#hdIDCLIENTE").val()
+            "NOME": $('#formCadastroBenef #Nome').val(),
+            "CPF": cpf,
+            "IDCLIENTE": $('#formCadastroBenef #hdIDCLIENTE').val()
         },
         error:
             function (r) {

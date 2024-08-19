@@ -5,7 +5,7 @@
 }
 @section scripts{
     <script>
-        var urlPost = '@Url.Action("Alterar", "Beneficiario", new { area = "" })';
+        var urlPostBenef = '@Url.Action("Alterar", "Beneficiario", new { area = "" })';
         var urlExcluir = '@Url.Action("Excluir", "Beneficiario", new { area = "" })';
         var obj = @Html.Raw(Json.Encode(Model));
     </script>
@@ -14,6 +14,7 @@
     @Scripts.Render("~/bundles/beneficiarios")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jtable")
 }
 
 @Html.Partial("Forms")

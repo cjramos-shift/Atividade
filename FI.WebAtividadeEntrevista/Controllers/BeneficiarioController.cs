@@ -91,29 +91,60 @@ namespace WebAtividadeEntrevista.Controllers
         public ActionResult Alterar(long id)
         {
             BoBeneficiario bo = new BoBeneficiario();
-            Beneficiario beneficiario = bo.Consultar(id);
-            Models.BeneficiarioModel model = null;
+            List<Beneficiario> beneficiarios = bo.Listar(id);
+            List<BeneficiarioModel> model = new List<BeneficiarioModel>();
 
-            if (beneficiario != null)
+            try
             {
-                model = new BeneficiarioModel()
+                if (beneficiarios != null && beneficiarios.Any())
                 {
-                    Id = beneficiario.Id,
-                    Nome = beneficiario.Nome,
-                    CPF = beneficiario.CPF,
-                    IdCliente = beneficiario.IdCliente
-                };
-
+                    foreach (var beneficiario in beneficiarios)
+                    {
+                        model.Add(new BeneficiarioModel
+                        {
+                            Id = beneficiario.Id,
+                            Nome = beneficiario.Nome,
+                            CPF = beneficiario.CPF,
+                            IdCliente = beneficiario.IdCliente
+                        });
+                    }
+                }
 
             }
-
+            catch (Exception ex) { }
             return View(model);
         }
 
-        // GET: Beneficiario/Excluir/5
-        public ActionResult Excluir(int id)
+        public JsonResult BeneficiarioList(long id)
         {
-            return View();
+            try
+            {
+                BoBeneficiario bo = new BoBeneficiario();
+                List<Beneficiario> beneficiarios = bo.Listar(id);
+
+                return Json(new { Result = "OK", Records = beneficiarios });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
+        // Ação para excluir um registro existente
+        [HttpPost]
+        public JsonResult Excluir(long id)
+        {
+            BoBeneficiario bo = new BoBeneficiario();
+
+            if (id <= 0)
+            {
+                return Json(new { Result = "ERROR", Message = "ID inválido." });
+            }
+
+            // Aqui você pode chamar um método para excluir o beneficiário
+            bo.Excluir(id);
+
+            return Json(new { Result = "OK" });
         }
 
         // POST: Beneficiario/Excluir/5

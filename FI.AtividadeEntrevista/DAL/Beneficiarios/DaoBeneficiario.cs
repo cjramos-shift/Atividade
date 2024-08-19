@@ -36,11 +36,11 @@ namespace FI.AtividadeEntrevista.DAL.Beneficiarios
         /// Inclui um novo beneficiario
         /// </summary>
         /// <param name="beneficiario">Objeto de beneficiario</param>
-        internal DML.Beneficiario Consultar(long Id)
+        internal DML.Beneficiario Consultar(long idCliente)
         {
             List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
 
-            parametros.Add(new System.Data.SqlClient.SqlParameter("Id", Id));
+            parametros.Add(new System.Data.SqlClient.SqlParameter("Id", idCliente));
 
             DataSet ds = base.Consultar("FI_SP_ConsBenef", parametros);
             List<DML.Beneficiario> benef = Converter(ds);
@@ -85,11 +85,11 @@ namespace FI.AtividadeEntrevista.DAL.Beneficiarios
         /// <summary>
         /// Lista todos os clientes
         /// </summary>
-        internal List<DML.Beneficiario> Listar()
+        internal List<DML.Beneficiario> Listar(long id)
         {
             List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
 
-            parametros.Add(new System.Data.SqlClient.SqlParameter("Id", 0));
+            parametros.Add(new System.Data.SqlClient.SqlParameter("IdCliente", id));
 
             DataSet ds = base.Consultar("FI_SP_ConsBenef", parametros);
             List<DML.Beneficiario> benef = Converter(ds);
@@ -137,6 +137,7 @@ namespace FI.AtividadeEntrevista.DAL.Beneficiarios
                     benef.Id = row.Field<long>("Id");
                     benef.Nome = row.Field<string>("Nome");
                     benef.CPF = row.Field<string>("CPF");
+                    benef.IdCliente = row.Field<long>("IdCliente");
                     lista.Add(benef);
                 }
             }

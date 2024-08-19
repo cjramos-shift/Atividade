@@ -140,9 +140,12 @@ function showModal(id) {
             $('body').append(modalHtml);
             $('#' + modalId).modal('show');
             $('#' + modalId + ' #hdIDCLIENTE').val(id);
+            $('#' + modalId + ' #CPF').mask('999.999.999-99');
         },
         error: function () {
             alert('Erro ao carregar o modal.');
         }
     });
+
+    carregaGridBenef();
 }

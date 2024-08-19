@@ -33,10 +33,10 @@ namespace FI.AtividadeEntrevista.BLL
         /// </summary>
         /// <param name="id">id do beneficiario</param>
         /// <returns></returns>
-        public DML.Beneficiario Consultar(long id)
+        public DML.Beneficiario Consultar(long idCliente)
         {
             DAL.Beneficiarios.DaoBeneficiario benef = new DAL.Beneficiarios.DaoBeneficiario();
-            return benef.Consultar(id);
+            return benef.Consultar(idCliente);
         }
 
         /// <summary>
@@ -53,10 +53,10 @@ namespace FI.AtividadeEntrevista.BLL
         /// <summary>
         /// Lista os beneficiarios
         /// </summary>
-        public List<DML.Beneficiario> Listar()
+        public List<DML.Beneficiario> Listar(long id)
         {
             DAL.Beneficiarios.DaoBeneficiario benef = new DAL.Beneficiarios.DaoBeneficiario();
-            return benef.Listar();
+            return benef.Listar(id);
         }
 
         /// <summary>
@@ -67,6 +67,15 @@ namespace FI.AtividadeEntrevista.BLL
             DAL.Beneficiarios.DaoBeneficiario benef = new DAL.Beneficiarios.DaoBeneficiario();
             return benef.Pesquisa(iniciarEm, quantidade, campoOrdenacao, crescente, out qtd);
         }
+
+        /// <summary>
+        /// Lista os beneficiarios por ID
+        /// </summary>
+        //public List<DML.Beneficiario> PesquisaId(int id)
+        //{
+        //    DAL.Beneficiarios.DaoBeneficiario benef = new DAL.Beneficiarios.DaoBeneficiario();
+        //    return benef.PesquisaId(id);
+        //}
 
         /// <summary>
         /// VerificaExistencia
