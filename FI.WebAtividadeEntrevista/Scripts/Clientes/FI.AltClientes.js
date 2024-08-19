@@ -120,9 +120,10 @@ function showModal(id) {
         type: 'GET',
         data: { id: id },
         success: function (result) {
-            var modalId = 'modal-' + Math.random().toString().replace('.', '');
+            //var modalId = 'modal-' + Math.random().toString().replace('.', '');
+            var modalId = 'modalBenef';
             var modalHtml = `
-                        <div id="${modalId}" class="modal fade">
+                        <div id="${modalId}" class="modal fade modal-lg">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -141,11 +142,12 @@ function showModal(id) {
             $('#' + modalId).modal('show');
             $('#' + modalId + ' #hdIDCLIENTE').val(id);
             $('#' + modalId + ' #CPF').mask('999.999.999-99');
+            carregaGridBenef(modalId, id);
         },
         error: function () {
             alert('Erro ao carregar o modal.');
         }
     });
 
-    carregaGridBenef();
+    
 }

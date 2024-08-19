@@ -70,25 +70,79 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                if (!bo.VerificarExistencia(model.CPF))
-                {
-                    bo.Alterar(new Beneficiario()
-                    {
-                        Id = model.Id,
-                        Nome = model.Nome,
-                        CPF = model.CPF,
-                        IdCliente = model.IdCliente
-                    });
 
-                    return Json("Cadastro alterado com sucesso");
-                }
-                else
-                    return Json("CPF já utilizado");
+                bo.Alterar(new Beneficiario()
+                {
+                    Id = model.Id,
+                    Nome = model.Nome,
+                    CPF = model.CPF,
+                    IdCliente = model.IdCliente
+                });
+
+                return Json("Cadastro alterado com sucesso");
             }
         }
 
+        //[HttpGet]
+        //public ActionResult Alterar(long id)
+        //{
+        //    BoBeneficiario bo = new BoBeneficiario();
+        //    List<Beneficiario> beneficiarios = bo.Listar(id);
+        //    List<BeneficiarioModel> model = new List<BeneficiarioModel>();
+
+        //    try
+        //    {
+        //        if (beneficiarios != null && beneficiarios.Any())
+        //        {
+        //            foreach (var beneficiario in beneficiarios)
+        //            {
+        //                model.Add(new BeneficiarioModel
+        //                {
+        //                    Id = beneficiario.Id,
+        //                    Nome = beneficiario.Nome,
+        //                    CPF = beneficiario.CPF,
+        //                    IdCliente = beneficiario.IdCliente
+        //                });
+        //            }
+        //        }
+
+
+
+        //    }
+        //    catch (Exception ex) { }
+        //    return View(model);
+        //}
+
         [HttpGet]
         public ActionResult Alterar(long id)
+        {
+            BoBeneficiario bo = new BoBeneficiario();
+            Beneficiario beneficiario = bo.Consultar(id);
+            BeneficiarioModel model = null;
+
+            try
+            {
+                if (beneficiario != null)
+                {
+                    model = new BeneficiarioModel
+                    {
+                        Id = beneficiario.Id,
+                        Nome = beneficiario.Nome,
+                        CPF = beneficiario.CPF,
+                        IdCliente = beneficiario.IdCliente
+                    };
+
+                }
+
+
+
+            }
+            catch (Exception ex) { }
+            return View(model);
+        }
+
+        [HttpGet]
+        public JsonResult CarregaGrid(long id)
         {
             BoBeneficiario bo = new BoBeneficiario();
             List<Beneficiario> beneficiarios = bo.Listar(id);
@@ -112,7 +166,7 @@ namespace WebAtividadeEntrevista.Controllers
 
             }
             catch (Exception ex) { }
-            return View(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult BeneficiarioList(long id)
@@ -144,14 +198,29 @@ namespace WebAtividadeEntrevista.Controllers
             // Aqui você pode chamar um método para excluir o beneficiário
             bo.Excluir(id);
 
-            return Json(new { Result = "OK" });
+            return Json(new { Result = "OK", Message = "Beneficiário excluído." });
         }
 
         // POST: Beneficiario/Excluir/5
-        [HttpPost]
-        public JsonResult Excluir(BeneficiarioModel model)
-        {
-            return Json("");
-        }
+        //[HttpPost]
+        //public JsonResult Excluir(BeneficiarioModel model)
+        //{
+        //    return Json("");
+        //}
+
+        //public ActionResult Excluir(long id)
+        //{
+        //    BoBeneficiario bo = new BoBeneficiario();
+
+        //    if (id <= 0)
+        //    {
+        //        return Json(new { Result = "ERROR", Message = "ID inválido." });
+        //    }
+
+        //    // Aqui você pode chamar um método para excluir o beneficiário
+        //    bo.Excluir(id);
+
+        //    return View();
+        //}
     }
 }

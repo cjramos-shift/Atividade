@@ -1,11 +1,11 @@
 ﻿
-$(document).ready(function () {
-    $('#formCadastroBenef #CPF').mask('999.999.999-99');
-})
+//$(document).ready(function () {
+//    $('#formCadastroBenef #CPF').mask('999.999.999-99');
+//})
 
 function insereBeneficiario() {
 
-    var cpf = $('#formCadastroBenef #CPF').val();
+    var cpf = $('#modalBenef #CPF').val();
 
     if (!validarCPF(cpf)) {
         ModalDialog("Ocorreu um erro", "O CPF Informado é inválido.");
@@ -18,9 +18,9 @@ function insereBeneficiario() {
         url: "/Beneficiario/Incluir/" + $('#formCadastroBenef #hdIDCLIENTE').val(),
         method: "POST",
         data: {
-            "NOME": $('#formCadastroBenef #Nome').val(),
+            "NOME": $('#modalBenef #Nome').val(),
             "CPF": cpf,
-            "IDCLIENTE": $('#formCadastroBenef #hdIDCLIENTE').val()
+            "IDCLIENTE": $('#modalBenef #hdIDCLIENTE').val()
         },
         error:
             function (r) {

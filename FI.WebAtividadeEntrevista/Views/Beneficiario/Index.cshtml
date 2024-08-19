@@ -8,9 +8,13 @@
     var urlClienteList = '@Url.Action("BeneficiarioList", "Beneficiario", new { area = "" })';
 
     </script>
-    @Scripts.Render("~/bundles/listBeneficiario")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jtable")
+    @Scripts.Render("~/bundles/altBeneficiarios")
+    @Scripts.Render("~/bundles/listBeneficiarios")
+    @Scripts.Render("~/bundles/beneficiarios")
+
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
 <hr />

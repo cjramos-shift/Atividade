@@ -1,43 +1,125 @@
-﻿
-$(document).ready(function () {
-    //$('#formCadastro #CPF').mask('000.000.000-00');
+﻿function carregaGridBenef(modalId, id) {
 
-    debugger;
-    if (document.getElementById("gridBeneficiarios"))
-        $('#gridBeneficiarios').jtable({
-            id: $('#formCadastroBenef #hdIDCLIENTE').val(),
-            actions: {
-                listAction: '/Beneficiario/BeneficiarioList/',
-            },
-            fields: {
-                Nome: {
-                    title: 'CPF',
-                    width: '35%'
-                },
-                Email: {
-                    title: 'Nome',
-                    width: '50%'
-                },
-                Ações: {
-                    title: '',
-                    display: function (data) {
-                        return '<button onclick="window.location.href=\'' + urlAlteracao + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button> ' +
-                            '<button onclick="window.location.href=\'' + urlExcluir + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Excluir</button>';
-                    }
-                }
+    $.getJSON('/Beneficiario/CarregaGrid/' + id, function (data) {
+        var tbody = $('#' + modalId + ' #beneficiariosTable tbody');
+        tbody.empty();
+        data.forEach(function (item) {
+            tbody.append(`
+                        <tr>
+                            <td>${item.Nome}</td>
+                            <td>${item.CPF}</td>
+                            <td class="actions">
+                                <button class="btn btn-primary btn-sm edit-btn" data-id="${item.Id}">Editar</button>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="${item.Id}">Excluir</button>
+                            </td>
+                        </tr>
+                    `);
+        });
+    });
+
+    $('#' + modalId + ' #beneficiariosTable').on('click', '.edit-btn', function () {
+        var id = $(this).data('id');
+        var nome = $(this).closest('tr').find('td').eq(0).text();
+        var cpf = $(this).closest('tr').find('td').eq(1).text();
+        $('#' + modalId + ' #editNome').val(nome);
+        $('#' + modalId + ' #editCPF').val(cpf);
+        $('#' + modalId + ' #editId').val(id);
+        $('#' + modalId + ' #editModal').modal('show');
+    });
+
+    $('#' + modalId + ' #beneficiariosTable').on('click', '.delete-btn', function () {
+        var id = $(this).data('id');
+        $('#' + modalId + ' #confirmDelete').data('id', id);
+        $('#' + modalId + ' #deleteModal').modal('show');
+    });
+
+    $('#' + modalId + ' #saveChanges').click(function () {
+        var id = $('#' + modalId + ' #editId').val();
+        var nome = $('#' + modalId + ' #editNome').val();
+        var cpf = $('#' + modalId + ' #editCPF').val();
+        $.ajax({
+            url: '/Beneficiario/Alterar/' + id,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                Id: id,
+                Nome: nome,
+                CPF: cpf
+            }),
+            success: function (result) {
+                alert(result);
+                $('#' + modalId + ' #editModal').modal('hide');
+                // Recarregue os dados da tabela
+                $.getJSON('/Beneficiario/Alterar/' + id, function (data) {
+                    var tbody = $('#' + modalId + ' #beneficiariosTable tbody');
+                    tbody.empty();
+                    data.forEach(function (item) {
+                        tbody.append(`
+                                    <tr>
+                                        <td>${item.Nome}</td>
+                                        <td>${item.CPF}</td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-btn" data-id="${item.Id}">Editar</button>
+                                            <button class="btn btn-danger btn-sm delete-btn" data-id="${item.Id}">Excluir</button>
+                                        </td>
+                                    </tr>
+                                `);
+                    });
+                });
             }
         });
+    });
 
-    //Load student list from server
-    if (document.getElementById("gridBeneficiarios"))
-        $('#gridBeneficiarios').jtable('load');
-})
+    $('#' + modalId + ' #confirmDelete').click(function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/Beneficiario/Excluir/' + id,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                Id: id
+            }),
+            error:
+                function (r) {
+                    if (r.status == 400)
+                        ModalDialog("Ocorreu um erro", r.responseJSON);
+                    else if (r.status == 500)
+                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+                },
+            success: function (result) {
+                alert(result);
+                $('#' + modalId + ' #deleteModal').modal('hide');
+                // Recarregue os dados da tabela
+                $.getJSON('/Beneficiario/Excluir/' + id, function (data) {
+                    var tbody = $('#' + modalId + ' #beneficiariosTable tbody');
+                    tbody.empty();
+                    data.forEach(function (item) {
+                        tbody.append(`
+                                    <tr>
+                                        <td>${item.Nome}</td>
+                                        <td>${item.CPF}</td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-btn" data-id="${item.Id}">Editar</button>
+                                            <button class="btn btn-danger btn-sm delete-btn" data-id="${item.Id}">Excluir</button>
+                                        </td>
+                                    </tr>
+                                `);
+                    });
+                });
+            }
+        });
+    });
+}
 
-function carregaGridBenef() {
+function carregaGridBenef_old() {
     debugger;
     if ($("#formCadastroBenef #gridBeneficiarios"))
-        $('#formCadastroBenef #gridBeneficiarios').jtable({
-            id: $('#formCadastroBenef #hdIDCLIENTE').val(),
+        $("#formCadastroBenef #gridBeneficiarios").jtable({
+            title: '',
+            paging: false, //Enable paging
+            pageSize: 10, //Set page size (default: 10)
+            sorting: false, //Enable sorting
+            defaultSorting: 'Nome ASC', //Set default sorting
             actions: {
                 listAction: '/Beneficiario/BeneficiarioList/',
             },
