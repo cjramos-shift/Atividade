@@ -107,7 +107,8 @@ namespace FI.AtividadeEntrevista.DAL.Beneficiarios
 
             parametros.Add(new System.Data.SqlClient.SqlParameter("Nome", beneficiario.Nome));
             parametros.Add(new System.Data.SqlClient.SqlParameter("CPF", beneficiario.CPF));
-            parametros.Add(new System.Data.SqlClient.SqlParameter("IDCLIENTE", beneficiario.IdCliente));
+            //parametros.Add(new System.Data.SqlClient.SqlParameter("IDCLIENTE", beneficiario.IdCliente));
+            parametros.Add(new System.Data.SqlClient.SqlParameter("ID", beneficiario.Id));
 
             base.Executar("FI_SP_AltBenef", parametros);
         }

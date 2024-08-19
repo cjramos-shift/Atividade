@@ -5,6 +5,7 @@
 
 function insereBeneficiario() {
 
+    debugger;
     var cpf = $('#modalBenef #CPF').val();
 
     if (!validarCPF(cpf)) {
@@ -31,7 +32,7 @@ function insereBeneficiario() {
             },
         success:
             function (r) {
-
+                carregaGridBenef('modalBenef', $('#modalBenef #hdIDCLIENTE').val());
             }
     });
 }

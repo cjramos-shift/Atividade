@@ -1,4 +1,5 @@
 ﻿function carregaGridBenef(modalId, id) {
+    var idCliente = id;
 
     $.getJSON('/Beneficiario/CarregaGrid/' + id, function (data) {
         var tbody = $('#' + modalId + ' #beneficiariosTable tbody');
@@ -34,6 +35,7 @@
     });
 
     $('#' + modalId + ' #saveChanges').click(function () {
+        //var idCliente = ('#' + modalId + ' #hdIDCLIENTE').val();
         var id = $('#' + modalId + ' #editId').val();
         var nome = $('#' + modalId + ' #editNome').val();
         var cpf = $('#' + modalId + ' #editCPF').val();
@@ -66,6 +68,8 @@
                                 `);
                     });
                 });
+
+                carregaGridBenef(modalId, idCliente);
             }
         });
     });
@@ -106,6 +110,8 @@
                                 `);
                     });
                 });
+
+                carregaGridBenef(modalId, idCliente);
             }
         });
     });
